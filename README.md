@@ -12,7 +12,7 @@ To get a local copy up and running follow these simple steps.
 - git clone the repo
 
 ```
-git clone git@github.com:rejoan/SyncTension.git && cd covtension
+git clone git@github.com:rejoan/SyncTension.git && cd SyncTension
 ```
 
 - Install all the required packages with
