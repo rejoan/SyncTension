@@ -1,1 +1,18 @@
+#sweepstable td, #sweepstable th {
+    font-size:13px;
+	align-content:center;
+	text-align:center;
+}
 
+.deposit {
+    background:#eee;
+}
+.redeem {
+    background:#fff;
+}
+.deposit .btn {
+    background: #336699;
+}
+.redeem .btn {
+    background: #a63333;
+}

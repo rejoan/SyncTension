@@ -11,31 +11,13 @@
   <body>
   <div class="container">
 	<div class="row">
-		<div style="min-width:300px;" class="col-12 px-4 my-2">
-			<form class="form-data" autocomplete="on">
-			  <div class="mb-2">
-				Select an user
-			  </div>
-			  <div class="mb-2">
-				<select id="juwa_user" class="form-select shadow-none">
-				  <option selected>Please choose</option>
-				  <option value="dvwarrior18">Dvwarrior18</option>
-				  <option value="kellymooneyham">kellymooneyham</option>
-				  <option value="ruthlessone2">ruthlessone2</option>
-				  <option value="queenang75">queenang75</option>
-				  <option value="testaccount4">testaccount4</option>
-				  <option value="neverland03q2">neverland03q2</option>
-				  <option value="testaccount777_2">testaccount777_2</option>
-				  <option value="testaccount777_1">testaccount777_1</option>
-				</select>
-			  </div>
-			  <input type="submit" value="Show All" class="btn btn-sm btn-info text-white search-btn">
-			</form>
-			
+	<div class="loading"><img width="100" src="loader.gif" alt="loading"/></div>
+		<div id="result-container" style="min-width:300px;" class="col-12 px-4 my-2">
+			<div class="errors"></div>
 		</div>
 	</div>
 	</div>
 	<script src="jquery-3.7.1.min.js"></script>
-    <script src="script.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
