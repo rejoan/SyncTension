@@ -1,6 +1,7 @@
 import axios from "axios";
 const api = "https://sweepstxn.icu/api/ledgers";
 const updateAPI = "https://sweepstxn.icu/api/ledgers/update";
+const setCron = "https://sweepstxn.icu/api/sweep/set-cron";
 const injectUser = document.querySelector('.rusername');
 $('.loading,.errors').hide();
 
@@ -61,7 +62,6 @@ async function getCurrentTab() {
   const queryOptions = { active: true, currentWindow: true };
   const [tab] = await chrome.tabs.query(queryOptions);
   return tab;
-  return true;
 }
 
 
@@ -93,4 +93,28 @@ $('body').on('click','.rusername', async function(){
 			
 		});
 		return true;
+});
+
+$('body').on('change','#cronSetCheck', function(){
+	$('.loading').slideDown();
+	$(this).addClass('disabled');
+	$(this).attr('disabled',true);
+	let formData = new FormData();
+	let cronCheck = $(this).is(':checked');
+	let cronD;
+	if(cronCheck){
+		cronD = 'yes';
+	}else{
+		cronD = 'no';
+	}
+	formData.append('cron', cronD);
+	axios.post(setCron, formData).then(function (resp) {
+		$('.loading').slideUp();
+		$('#cronSetCheck').removeClass('disabled');
+		$('#cronSetCheck').attr('disabled', false);
+	  }).catch(function (error) {
+		console.log(error);
+		$('.loading').slideUp();
+	});
+	return true;
 });
