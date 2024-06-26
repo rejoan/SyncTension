@@ -23,7 +23,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			inputV.val('1');
 			inputV[0].dispatchEvent(new CustomEvent('input'));
 			$('body').find('.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")').click();
-			//sendResponse({'action':todo,'username':request.juser,'rid':request.userid});
 		});
 	}
 	return true;

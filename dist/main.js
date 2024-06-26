@@ -4691,11 +4691,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const api = "https://sweepstxn.icu/api/ledgers";
 const updateAPI = "https://sweepstxn.icu/api/ledgers/update";
-const setCron = "https://sweepstxn.icu/api/sweep/set-cron";
-const injectUser = document.querySelector('.rusername');
 $('.loading,.errors').hide();
 
-window.onload = async function() {
+window.onload = async function() { 
 	$('.loading').slideDown();
 	const tab = await getCurrentTab();
 	const url = tab.url;
@@ -4785,29 +4783,6 @@ $('body').on('click','.rusername', async function(){
 		return true;
 });
 
-$('body').on('change','#cronSetCheck', function(){
-	$('.loading').slideDown();
-	$(this).addClass('disabled');
-	$(this).attr('disabled',true);
-	let formData = new FormData();
-	let cronCheck = $(this).is(':checked');
-	let cronD;
-	if(cronCheck){
-		cronD = 'yes';
-	}else{
-		cronD = 'no';
-	}
-	formData.append('cron', cronD);
-	axios__WEBPACK_IMPORTED_MODULE_0__["default"].post(setCron, formData).then(function (resp) {
-		$('.loading').slideUp();
-		$('#cronSetCheck').removeClass('disabled');
-		$('#cronSetCheck').attr('disabled', false);
-	  }).catch(function (error) {
-		console.log(error);
-		$('.loading').slideUp();
-	});
-	return true;
-});
 })();
 
 /******/ })()
