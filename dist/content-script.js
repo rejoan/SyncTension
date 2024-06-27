@@ -1,8 +1,17 @@
-//interval = setInterval(function(){
+interval5 = setInterval(function(){
+	let url = window.location.href;
+	if(url.search('https://ht.juwa777.com/userManagement') < 0){
+		return;
+	}
+
 fetch('https://sweepstxn.icu/api/ledgers',{
 	method: 'GET'
 	}).then(response => response.json())
 	.then(async function(jsonResponse){
+		if(jsonResponse.length < 1){
+			console.log('No new Data');
+			return;
+		}
 	  for (let i=0 ; i < jsonResponse.length; i++){
 		let ledgerID = jsonResponse[i].id;
 		let todo = '';
@@ -13,6 +22,7 @@ fetch('https://sweepstxn.icu/api/ledgers',{
 		  todo = "Redeem"; 
 		}
 		const data = {juser: jsonResponse[i].user, todo:todo};
+		
 		if(i == 0){
 			openPopup(data).then(async () => {
 				let inputV = $('body').find('.el-dialog label:contains("'+todo+' Amount")').parents('.el-form-item').find('input');
@@ -38,7 +48,7 @@ fetch('https://sweepstxn.icu/api/ledgers',{
 		}
 	  }
 });
-//}, 3000);
+}, 5*60*1000);
 
 
 $('body').on('click', '.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")', function(e){
