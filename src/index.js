@@ -42,8 +42,11 @@ window.onload = async function() {
 			
 			table += '<tr id="user_'+aData[i].id+'" class="'+typeclass+'"><td>'+thetype+'</td><td>'+username+'</td><td>'+aData[i].amount+'</td><td>'+thesweeps+'</td><td title="'+thefulldate+'">'+thedate+'</td><td><a class="btn btn-sm btn-info text-white rusername" href="#" data-username="'+username+'" data-userid="'+aData[i].id+'">'+buttontext+'</a></td></tr>';
 		}
-		
-		table += '</tbody></table>';
+		var updateAll = '';
+		if(aData.length > 0){
+			updateAll = '<a class="btn btn-sm btn-dark updateAll" href="#">Update All</a>';
+		}
+		table += '</tbody></table>'+updateAll;
 		$('#result-container').html(table);
 		$('.loading').slideUp();
 		return true;
@@ -91,4 +94,19 @@ $('body').on('click','.rusername', async function(){
 			
 		});
 		return true;
+});
+
+
+$('body').on('click','.updateAll', async function(){
+	$('.loading').slideDown();
+	$(this).addClass('disabled');
+	const tab = await getCurrentTab();
+	chrome.scripting.executeScript({
+		target: { tabId: tab.id },
+		files: ['jquery-3.7.1.min.js','upAll.js']
+	},function() {
+		$('.loading').slideUp();
+		window.close();	
+	});
+	return true;
 });
