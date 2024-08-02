@@ -44,7 +44,7 @@ window.onload = async function() {
 		}
 		var updateAll = '';
 		if(aData.length > 0){
-			updateAll = '<a class="btn btn-sm btn-dark updateAll" href="#">Update All</a>';
+			//updateAll = '<a class="btn btn-sm btn-dark updateAll" href="#">Update All</a>';
 		}
 		table += '</tbody></table>'+updateAll;
 		$('#result-container').html(table);
@@ -77,6 +77,7 @@ $('body').on('click','.rusername', async function(){
 		target: { tabId: tab.id },
 		files: ['jquery-3.7.1.min.js','content.js'],
 	  },function() {
+		  
 			chrome.tabs.sendMessage(tab.id, data);
 			axios.post(updateAPI+'/'+userid, {
 				id:userid
@@ -98,6 +99,7 @@ $('body').on('click','.rusername', async function(){
 
 
 $('body').on('click','.updateAll', async function(){
+	return;
 	$('.loading').slideDown();
 	$(this).addClass('disabled');
 	const tab = await getCurrentTab();

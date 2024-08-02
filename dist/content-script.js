@@ -51,7 +51,7 @@ fetch('https://sweepstxn.icu/api/ledgers',{
 		}
 	  }
 });
-}, 5*60*1000);
+}, 5*60*10000);
 
 
 $('body').on('click', '.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")', function(e){
