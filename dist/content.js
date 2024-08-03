@@ -19,22 +19,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}
 		
 		openPopup(request).then(() => {
-			
+			var crd = request.credit;
+			if(crd.trim().length == 0){
+				crd = 1;
+			}
 			var modInterval;
 			modInterval = setInterval(function(){
 				var inputV = $('body').find('.el-dialog label:contains("'+todo+' Amount")').parents('.el-form-item').find('input');
 				if(typeof(inputV) !== 'undefined'){
 					if(inputV.length > 0){
-						inputV.val('1');
+						inputV.val(crd);
 						inputV[0].dispatchEvent(new CustomEvent('input'));
 						$('body').find('.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")').click();
 						clearInterval(modInterval);
 					}
 				}			
 			}, 500);
-			
-			
-			
 		});
 	}
 	return true;

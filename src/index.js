@@ -21,12 +21,21 @@ window.onload = async function() {
 			chrome.tabs.sendMessage(tab.id, data);
 	});
 	
+	getRecords(api);
+  
+	return true;
+}
+setInterval(function(){
+  getRecords(api);
+}, 10000);
+
+function getRecords(api){
 	axios.get(api, {
 	  }).then(function (response) {
 		localStorage.setItem('ledgerObj',JSON.stringify(response.data));
 		var ledgerG = localStorage.getItem('ledgerObj');
 		var aData = JSON.parse(ledgerG);
-		var table = '<table id="sweepstable" class="table table-bordered mt-2"><thead><tr><th scope="col">Type</th><th scope="col">User</th><th scope="col">Amount</th><th scope="col">Sweeps</th><th scope="col">Time</th><th scope="col">Action</th></tr></thead><tbody>';
+		var table = '<table id="sweepstable" class="table table-bordered mt-2"><thead><tr><th scope="col">Type</th><th scope="col">User</th><th scope="col">Amount</th><th scope="col">Time</th><th scope="col">Credit</th><th scope="col">Action</th></tr></thead><tbody>';
 		for (var i=0 ; i < aData.length; i++){
 			var username = aData[i].user;
 			const date = new Date(aData[i].timestamp);
@@ -40,13 +49,9 @@ window.onload = async function() {
 			var thesweeps = aData[i].sweepstakes;
 			if (aData[i].sweepstakes==5) { thesweeps = "Juwa"; }
 			
-			table += '<tr id="user_'+aData[i].id+'" class="'+typeclass+'"><td>'+thetype+'</td><td>'+username+'</td><td>'+aData[i].amount+'</td><td>'+thesweeps+'</td><td title="'+thefulldate+'">'+thedate+'</td><td><a class="btn btn-sm btn-info text-white rusername" href="#" data-username="'+username+'" data-userid="'+aData[i].id+'">'+buttontext+'</a></td></tr>';
+			table += '<tr id="user_'+aData[i].id+'" class="'+typeclass+'"><td>'+thetype+'</td><td>'+username+'</td><td>'+aData[i].amount+'</td><td title="'+thefulldate+'">'+thedate+'</td><td><input type="text" class="form-control shadow-none"/></td><td><a class="btn btn-sm btn-info text-white rusername" href="#" data-username="'+username+'" data-userid="'+aData[i].id+'">'+buttontext+'</a></td></tr>';
 		}
-		var updateAll = '';
-		if(aData.length > 0){
-			//updateAll = '<a class="btn btn-sm btn-dark updateAll" href="#">Update All</a>';
-		}
-		table += '</tbody></table>'+updateAll;
+		table += '</tbody></table>';
 		$('#result-container').html(table);
 		$('.loading').slideUp();
 		return true;
@@ -54,8 +59,6 @@ window.onload = async function() {
 		console.log(error);
 		$('.loading').slideUp();
 	});
-  
-	return true;
 }
 
 
@@ -71,8 +74,9 @@ $('body').on('click','.rusername', async function(){
 	$(this).addClass('disabled');
 	const todo = $(this).closest('tr').attr('class');
 	const userid = $(this).attr('data-userid');
+	const credit = $(this).parent().prev().find('input').val();
 	const tab = await getCurrentTab();
-	const data = {juser: $(this).attr('data-username'), todo:todo, userid:userid};
+	const data = {juser: $(this).attr('data-username'), todo:todo, userid:userid,credit:credit};
 	chrome.scripting.executeScript({
 		target: { tabId: tab.id },
 		files: ['jquery-3.7.1.min.js','content.js'],
@@ -95,20 +99,4 @@ $('body').on('click','.rusername', async function(){
 			
 		});
 		return true;
-});
-
-
-$('body').on('click','.updateAll', async function(){
-	return;
-	$('.loading').slideDown();
-	$(this).addClass('disabled');
-	const tab = await getCurrentTab();
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		files: ['jquery-3.7.1.min.js','upAll.js']
-	},function() {
-		$('.loading').slideUp();
-		window.close();	
-	});
-	return true;
 });
