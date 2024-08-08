@@ -35,7 +35,7 @@ function getRecords(api){
 		localStorage.setItem('ledgerObj',JSON.stringify(response.data));
 		var ledgerG = localStorage.getItem('ledgerObj');
 		var aData = JSON.parse(ledgerG);
-		var table = '<table id="sweepstable" class="table table-bordered mt-2"><thead><tr><th scope="col">Type</th><th scope="col">User</th><th scope="col">Amount</th><th scope="col">Time</th><th scope="col">Credit</th><th scope="col">Action</th></tr></thead><tbody>';
+		var table = '<table id="sweepstable" class="table table-bordered mt-2"><thead><tr><th scope="col">Type</th><th scope="col">User</th><th scope="col">Amount</th><th scope="col">Time</th><th scope="col">Action</th></tr></thead><tbody>';
 		for (var i=0 ; i < aData.length; i++){
 			var username = aData[i].user;
 			const date = new Date(aData[i].timestamp);
@@ -49,7 +49,7 @@ function getRecords(api){
 			var thesweeps = aData[i].sweepstakes;
 			if (aData[i].sweepstakes==5) { thesweeps = "Juwa"; }
 			
-			table += '<tr id="user_'+aData[i].id+'" class="'+typeclass+'"><td>'+thetype+'</td><td>'+username+'</td><td>'+aData[i].amount+'</td><td title="'+thefulldate+'">'+thedate+'</td><td><input type="text" class="form-control shadow-none"/></td><td><a class="btn btn-sm btn-info text-white rusername" href="#" data-username="'+username+'" data-userid="'+aData[i].id+'">'+buttontext+'</a></td></tr>';
+			table += '<tr id="user_'+aData[i].id+'" class="'+typeclass+'"><td>'+thetype+'</td><td>'+username+'</td><td>'+aData[i].amount+'</td><td title="'+thefulldate+'">'+thedate+'</td><td><a class="btn btn-sm btn-info text-white rusername" href="#" data-username="'+username+'" data-userid="'+aData[i].id+'" data-credit="'+aData[i].amount+'">'+buttontext+'</a></td></tr>';
 		}
 		table += '</tbody></table>';
 		$('#result-container').html(table);
@@ -74,7 +74,7 @@ $('body').on('click','.rusername', async function(){
 	$(this).addClass('disabled');
 	const todo = $(this).closest('tr').attr('class');
 	const userid = $(this).attr('data-userid');
-	const credit = $(this).parent().prev().find('input').val();
+	const credit = $(this).attr('data-credit');
 	const tab = await getCurrentTab();
 	const data = {juser: $(this).attr('data-username'), todo:todo, userid:userid,credit:credit};
 	chrome.scripting.executeScript({
