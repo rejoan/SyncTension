@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 						clearInterval(modInterval);
 					}
 				}			
-			}, 500);
+			}, 1000);
 		});
 	}
 	return true;
@@ -66,7 +66,7 @@ async function openPopup(request) {
 				$('body').find('ul#'+ulID+' li:contains("'+todo+'")').click();
 				clearInterval(uIDinterval);
 			}			
-		}, 500);
+		}, 1000);
 	}
 	return true;
 }

@@ -71,7 +71,7 @@ async function getCurrentTab() {
 
 $('body').on('click','.rusername', async function(){
 	$('.loading').slideDown();
-	$(this).addClass('disabled');
+	$('.rusername').addClass('disabled');
 	const todo = $(this).closest('tr').attr('class');
 	const userid = $(this).attr('data-userid');
 	const credit = $(this).attr('data-credit');
@@ -89,6 +89,7 @@ $('body').on('click','.rusername', async function(){
 				if(resp.data.message == 'updated'){
 					$('#user_'+userid).remove();
 					$('.loading').slideUp();
+					$('.rusername').removeClass('disabled');
 					//window.close();
 				}
 				return true;
