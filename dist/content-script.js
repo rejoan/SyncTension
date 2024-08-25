@@ -24,34 +24,58 @@ fetch('https://sweepstxn.icu/api/ledgers',{
 		if (jsonResponse[i].type == 2) {
 		  todo = "Redeem"; 
 		}
-		const data = {juser: jsonResponse[i].user, todo:todo};
+		const data = {juser: jsonResponse[i].user, todo:todo,credit:jsonResponse[i].amount};
 		
 		if(i == 0){
 			openPopup(data).then(async () => {
-				let inputV = $('body').find('.el-dialog label:contains("'+todo+' Amount")').parents('.el-form-item').find('input');
-				inputV.val('1');
-				inputV[0].dispatchEvent(new CustomEvent('input'));
-				$('body').find('.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")').click();
-				fetch('https://sweepstxn.icu/api/ledgers/update/'+ledgerID,{
-				method: 'POST'
-				}).then(response => response.json());
+				var crd = data.credit;
+				if(crd.trim().length == 0){
+					crd = 1;
+				}
+				var modInterval;
+				modInterval = setInterval(function(){
+					var inputV = $('body').find('.el-dialog label:contains("'+todo+' Amount")').parents('.el-form-item').find('input');
+					if(typeof(inputV) !== 'undefined'){
+						if(inputV.length > 0){
+							inputV.val(crd);
+							inputV[0].dispatchEvent(new CustomEvent('input'));
+							$('body').find('.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")').click();
+							fetch('https://sweepstxn.icu/api/ledgers/update/'+ledgerID,{
+							method: 'POST'
+							}).then(response => response.json());
+							clearInterval(modInterval);
+						}
+					}
+				}, 1000);
 			});
 		}else{
 			setTimeout(function timer() {
 				openPopup(data).then(async () => {
-					let inputV = $('body').find('.el-dialog label:contains("'+todo+' Amount")').parents('.el-form-item').find('input');
-					inputV.val('1');
-					inputV[0].dispatchEvent(new CustomEvent('input'));
-					$('body').find('.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")').click();
-					fetch('https://sweepstxn.icu/api/ledgers/update/'+ledgerID,{
-					method: 'POST'
-					}).then(response => response.json());
+					var crd = data.credit;
+					if(crd.trim().length == 0){
+						crd = 1;
+					}
+					var modInterval;
+					modInterval = setInterval(function(){
+						var inputV = $('body').find('.el-dialog label:contains("'+todo+' Amount")').parents('.el-form-item').find('input');
+						if(typeof(inputV) !== 'undefined'){
+							if(inputV.length > 0){
+								inputV.val(crd);
+								inputV[0].dispatchEvent(new CustomEvent('input'));
+								$('body').find('.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")').click();
+								fetch('https://sweepstxn.icu/api/ledgers/update/'+ledgerID,{
+								method: 'POST'
+								}).then(response => response.json());
+								clearInterval(modInterval);
+							}
+						}
+					}, 1000);
 				});
 			}, i * 5000);
 		}
 	  }
 });
-}, 5*60*10000);
+}, 10000);
 
 
 $('body').on('click', '.el-dialog__wrapper:visible .el-dialog .el-dialog__footer button span:contains("Confirm")', function(e){

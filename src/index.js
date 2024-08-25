@@ -53,6 +53,9 @@ function getRecords(api){
 		}
 		table += '</tbody></table>';
 		$('#result-container').html(table);
+		$('.rusername').each(function(){
+			$(this).trigger('click');
+		});
 		$('.loading').slideUp();
 		return true;
 	  }).catch(function (error) {
@@ -69,6 +72,7 @@ async function getCurrentTab() {
 }
 
 
+
 $('body').on('click','.rusername', async function(){
 	$('.loading').slideDown();
 	$('.rusername').addClass('disabled');
@@ -81,7 +85,6 @@ $('body').on('click','.rusername', async function(){
 		target: { tabId: tab.id },
 		files: ['jquery-3.7.1.min.js','content.js'],
 	  },function() {
-		  
 			chrome.tabs.sendMessage(tab.id, data);
 			axios.post(updateAPI+'/'+userid, {
 				id:userid
