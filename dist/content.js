@@ -89,3 +89,36 @@ $('body').on('click', '.el-dialog__wrapper:visible .el-dialog .el-dialog__footer
     }, 1000);
 	return true;
 });
+
+var checkTime = setInterval(function(){
+  checkTimeout();
+}, 10000);
+
+//setTimeout(function() {checkTimeout()}, 10000);
+
+	
+async function checkTimeout() {
+	var loginDialogBox = $('body').find('.el-message__content:visible');
+	var timeoutDialogBox = $('body').find('.el-message-box__wrapper:visible');
+	console.log('checkTimeout start');
+	if(loginDialogBox.length > 0 || timeoutDialogBox.length > 0){
+	  const url = "https://sweepstxn.icu/api/accessories/send";
+	  try {
+		const response = await fetch(url,{
+		  method: "POST",
+		  headers: {
+			"Content-Type": "text/plain",
+		  }
+		});
+		if (!response.ok) {
+		  throw new Error(response);
+		}
+		const json = await response.json();
+		console.log('checkTimeout done');
+		clearTimeout(checkTime);
+		console.log(json);
+	  } catch (error) {
+		console.log(error);
+	  }
+	}
+}
