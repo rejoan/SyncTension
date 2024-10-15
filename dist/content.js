@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 						clearInterval(modInterval);
 					}
 				}			
-			}, 1000);
+			}, 2000);
 		});
 	}
 	return true;
