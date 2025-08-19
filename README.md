@@ -4,7 +4,6 @@ A google chrome extension built in HTML, CSS and JS that allows users Recharge/R
 - Get userlist from API
 - Display in table at extension popup with recharge/redeem button
 - On button click update juwa site items
-- Juwa777 site is a VueJS project
 - Then update DB through API and remove list from popup
 
 ## Getting Started
