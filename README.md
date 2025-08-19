@@ -1,6 +1,6 @@
 # SyncTension
 
-A google chrome extension built in HTML, CSS and JS that allows users Recharge/Redeem for live site https://ht.juwa777.com
+A google chrome extension built in HTML, CSS and JS that allows users Recharge/Redeem for live site
 - Get userlist from API
 - Display in table at extension popup with recharge/redeem button
 - On button click update juwa site items
